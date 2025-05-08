@@ -1,2 +1,2 @@
 # FuncGraph
-Program written in Zig, that hightlights the structure of functions.
+Program written in Rust, that hightlights the structure of functions.
