@@ -9,24 +9,9 @@ pub fn create_tree(lang: String, dir: PathBuf) {
 	let content = std::fs::read_to_string(dir).expect("File not found!");
 	let tree = parser.parse(&content, None);
 	println!("{:?}", tree.as_ref().unwrap().root_node().to_sexp());
-	// extract_function_names(tree.unwrap().root_node(), content);
 	extract_actual_structure(tree.unwrap().root_node(), content);
 }
 
-fn extract_function_names(root: Node, content: String) {
-	let mut cursor = root.walk();
-	let mut cursor2 = root.walk();
-
-	for node in root.children(&mut cursor) {
-        if node.kind() == "function_item" {
-            for child in node.children(&mut cursor2) {
-                if child.kind() == "identifier" {
-                    println!("Function name: {}", &content[child.byte_range()]);
-                }
-            }
-        }
-    }
-}
 
 fn extract_actual_structure(root: Node, content: String) {
     let mut cursor = root.walk();
