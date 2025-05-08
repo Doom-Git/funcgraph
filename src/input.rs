@@ -1,4 +1,4 @@
-use std::{path::PathBuf, process};
+use std::path::PathBuf;
 use clap::Parser;
 
 /// Program that looks through a given directory and analyzes with the given language which functions use which.
@@ -18,11 +18,11 @@ struct Args {
 pub fn parse_input() -> (String, PathBuf) {
 	let arg = Args::parse();
 
-	/* TODO: Check for supported languages */
+	// TODO: Check for supported languages
 
 	if !arg.dir.exists() {
 		eprintln!("The directory does not exist!");	
-		process::exit(1);
+		std::process::exit(1);
 	}
 	return (arg.lang, arg.dir);
 }

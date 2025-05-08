@@ -1,8 +1,7 @@
 mod input;
-
-use input::parse_input;
-
+mod parse;
 
 fn main() {
-    let (lang, dir) = parse_input();
+    let (lang, dir) = input::parse_input();
+    parse::create_tree(lang, dir);
 }
