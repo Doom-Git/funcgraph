@@ -29,7 +29,7 @@ fn extract_actual_structure(root: Node, content: String) {
 
         found = false;
 
-        visit_node_iterative(body_node, &content, |call_node| {
+        visit_node_iterative(body_node, |call_node| {
             if let Some(called_fn_node) = call_node.child_by_field_name("function") {
                 let called_fn_name = &content[called_fn_node.byte_range()];
                 found = true;
@@ -44,7 +44,7 @@ fn extract_actual_structure(root: Node, content: String) {
 }
 
 
-fn visit_node_iterative<F>(start_node: Node, content: &str, mut on_call: F)
+fn visit_node_iterative<F>(start_node: Node, mut on_call: F)
 where
     F: FnMut(Node),
 {
