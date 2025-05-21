@@ -22,7 +22,6 @@ pub fn create_tree(lang: String, dir: PathBuf) -> HashMap<String, Vec<String>> {
 //? Solution: Use a match with variables for each different name etc.
 fn extract_actual_structure(root: Node, content: String) -> HashMap<String, Vec<String>> {
     let mut cursor = root.walk();
-    let mut found;
     let mut map: HashMap<_, _> = HashMap::new();
 
     for function in root
@@ -33,12 +32,12 @@ fn extract_actual_structure(root: Node, content: String) -> HashMap<String, Vec<
         let body_node = function.child_by_field_name("body").unwrap();
         let function_name = &content[name_node.byte_range()];
 
-        found = false;
+        // Enter every function to the map, regardless if they call other ones or not (important for the graph)
+        map.entry(function_name.to_string()).or_insert_with(Vec::new);
 
         visit_node_iterative(body_node, |call_node| {
             if let Some(called_fn_node) = call_node.child_by_field_name("function") {
                 let called_fn_name = &content[called_fn_node.byte_range()];
-                found = true;
                 if !map.contains_key(function_name) {
                     map.insert(function_name.to_string(), vec![called_fn_name.to_string()]);
                 } else {
@@ -64,7 +63,7 @@ where
             on_call(node);
         }
 
-        // Push alle Kinder auf den Stack
+        // Push child nodes to the stack
         for i in (0..node.child_count()).rev() {
             if let Some(child) = node.child(i) {
                 stack.push(child);
