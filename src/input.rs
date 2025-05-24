@@ -18,8 +18,7 @@ struct Args {
 pub fn parse_input() -> (String, PathBuf) {
 	let arg = Args::parse();
 
-	// TODO: Check for supported languages
-
+	// Check for supported languages is in the match statement of main
 	if !arg.dir.exists() {
 		eprintln!("The directory does not exist!");	
 		std::process::exit(1);

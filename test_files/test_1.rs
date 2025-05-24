@@ -15,3 +15,6 @@ fn test_test() {
 fn get_recursived() {
 	get_recursived();
 }
+
+
+fn i_need_help() {}
