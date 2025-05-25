@@ -1,12 +1,14 @@
 [package]
 name = "funcgraph"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 
 [dependencies]
 clap = { version = "4.5.37", features = ["derive"] }
 graphviz-rust = "0.9.4"
 tree-sitter = "0.25.3"
+tree-sitter-java = "0.23.5"
+tree-sitter-python = "0.23.6"
 tree-sitter-rust = "0.24"
 
 [build-dependencies]

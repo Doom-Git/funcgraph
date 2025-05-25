@@ -1,20 +1,25 @@
-mod parser;
-mod input;
 mod graph;
+mod input;
+mod parser;
 
-use parser::builder::create_tree;
-use parser::java::JavaSpec;
-use parser::rust::RustSpec;
 use graph::gen_graph;
+use parser::builder::create_tree;
 
+use crate::parser::specs::rust::RustSpec;
+use crate::parser::specs::java::JavaSpec;
+use crate::parser::specs::python::PythonSpec;
 
+use tree_sitter_java::LANGUAGE as JAVA;
+use tree_sitter_rust::LANGUAGE as RUST;
+use tree_sitter_python::LANGUAGE as PYTHON;
 
 fn main() {
     let (lang, dir) = input::parse_input();
 
     let graph = match lang.as_str() {
-        "rust" => create_tree::<RustSpec>(dir, tree_sitter_rust::LANGUAGE.into()),
-        // "java" => create_tree::<JavaSpec>(path, tree_sitter_java::language()),
+        "rust" => create_tree::<RustSpec>(dir, RUST.into()),
+        "java" => create_tree::<JavaSpec>(dir, JAVA.into()),
+        "python" => create_tree::<PythonSpec>(dir, PYTHON.into()),
         _ => {
             eprintln!("Unsupported language: {}", lang);
             return;
@@ -22,4 +27,22 @@ fn main() {
     };
 
     gen_graph(graph);
+
+    // use tree_sitter::Parser;
+
+    // let code = r#"
+    //     class Test {
+    //         int doubl(int x) {
+    //             return x * 2;
+    //         }
+    //     }
+    //     "#;
+    // let mut parser = Parser::new();
+    // let language = tree_sitter_java::LANGUAGE;
+    // parser
+    //     .set_language(&language.into())
+    //     .expect("Error loading Java parser");
+    // println!("{:?}", parser.language().unwrap().name());
+    // let tree = parser.parse(code, None).unwrap();
+    // assert!(!tree.root_node().has_error());
 }
