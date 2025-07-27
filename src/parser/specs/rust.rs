@@ -1,5 +1,5 @@
-use tree_sitter::Node;
 use crate::parser::specs::language_spec::LanguageSpec;
+use tree_sitter::Node;
 pub struct RustSpec;
 
 impl LanguageSpec for RustSpec {
@@ -7,13 +7,8 @@ impl LanguageSpec for RustSpec {
         node.kind() == "function_item"
     }
 
-    fn get_function_name<'a>(node: &Node, content: &'a str) -> Option<&'a str> {
-        node.child_by_field_name("name")
-            .map(|n| &content[n.byte_range()])
-    }
-
-    fn get_function_body<'a>(node: &'a Node<'a>) -> Option<Node<'a>> {
-        node.child_by_field_name("body")
+    fn is_class_node(_node: &Node) -> bool {
+        false
     }
 
     fn is_call_expression(node: &Node) -> bool {
@@ -21,7 +16,8 @@ impl LanguageSpec for RustSpec {
     }
 
     fn get_called_function_name<'a>(call_node: &Node, content: &'a str) -> Option<&'a str> {
-        call_node.child_by_field_name("function")
+        call_node
+            .child_by_field_name("function")
             .map(|n| &content[n.byte_range()])
     }
 }
