@@ -15,15 +15,15 @@ pub fn extract_structure<T: LanguageSpec>(
     for node in root.children(&mut cursor) {
         if T::is_function_node(&node) {
             let name = T::get_node_name(&node, content).unwrap().to_string();
-            map.entry(class_name.clone() + &name).or_default();
+            map.entry(class_name.clone() + &name);
 
             if let Some(body) = T::get_node_body(&node) {
                 visit_node_iterative(body, |n| {
                     if T::is_call_expression(&n) {
                         if let Some(called) = T::get_called_function_name(&n, content) {
-                            map.entry(class_name.clone() + &name)
+                            map.entry(format!("{}{}", class_name, name))
                                 .or_default()
-                                .push(called.to_string());
+                                .push(format!("{}{}", class_name, called));
                         }
                     }
                 });
