@@ -1,6 +1,7 @@
 use tree_sitter::Node;
 
 pub trait LanguageSpec {
+    fn file_type<'a>() -> &'a str;
     fn is_function_node(node: &Node) -> bool;
     fn is_class_node(node: &Node) -> bool;
     fn get_node_name<'a>(node: &Node, content: &'a str) -> Option<&'a str> {

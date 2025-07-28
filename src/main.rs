@@ -21,7 +21,7 @@ fn main() {
         "java" => create_tree::<JavaSpec>(dir, JAVA.into()),
         "python" => create_tree::<PythonSpec>(dir, PYTHON.into()),
         _ => {
-            eprintln!("Unsupported language: {}", lang);
+            eprintln!("Unsupported language: {lang}");
             return;
         }
     };

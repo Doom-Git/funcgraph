@@ -4,6 +4,10 @@ use tree_sitter::Node;
 pub struct JavaSpec;
 
 impl LanguageSpec for JavaSpec {
+    fn file_type<'a>() -> &'a str {
+        ".java"
+    }
+
     fn is_function_node(node: &Node) -> bool {
         node.kind() == "method_declaration"
     }

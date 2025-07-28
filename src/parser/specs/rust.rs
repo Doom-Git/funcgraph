@@ -3,6 +3,10 @@ use tree_sitter::Node;
 pub struct RustSpec;
 
 impl LanguageSpec for RustSpec {
+    fn file_type<'a>() -> &'a str {
+        ".rs"
+    }
+
     fn is_function_node(node: &Node) -> bool {
         node.kind() == "function_item"
     }

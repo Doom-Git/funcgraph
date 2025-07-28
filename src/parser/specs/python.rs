@@ -4,6 +4,10 @@ use tree_sitter::Node;
 pub struct PythonSpec;
 
 impl LanguageSpec for PythonSpec {
+    fn file_type<'a>() -> &'a str {
+        ".py"
+    }
+
     fn is_function_node(node: &Node) -> bool {
         node.kind() == "function_definition"
     }
