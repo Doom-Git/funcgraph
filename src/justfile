@@ -1,0 +1,14 @@
+java1: 
+  cargo run -- --lang java --dir ~/funcgraph/test_files/Java.java
+
+java2:
+  cargo run -- --lang java --dir ~/funcgraph/test_files/Java2.java
+
+java3:
+  cargo run -- --lang java --dir ~/funcgraph/test_files/Java3.java
+
+rust:
+  cargo run -- --lang rust --dir ~/funcgraph/test_files/Rust.rs
+
+python:
+  cargo run -- --lang python --dir ~/funcgraph/test_files/Python.py

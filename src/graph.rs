@@ -29,6 +29,28 @@ pub fn gen_graph(val: HashMap<String, Vec<String>>) {
         }
     }
 
+    /*for (caller, callees) in &val {
+        // ID für den Caller, falls noch nicht vorhanden
+        let caller_id = *id_map.entry(caller.clone()).or_insert_with(|| {
+            let id = id_counter;
+            writeln!(graph_dot, "    n{} [label=\"{}\"];", id, caller).unwrap();
+            id_counter += 1;
+            id
+        });
+
+        for callee in callees {
+            // ID für den Callee, falls noch nicht vorhanden
+            let callee_id = *id_map.entry(callee.clone()).or_insert_with(|| {
+                let id = id_counter;
+                writeln!(graph_dot, "    n{} [label=\"{}\"];", id, callee).unwrap();
+                id_counter += 1;
+                id
+            });
+
+            writeln!(graph_dot, "    n{} -> n{};", caller_id, callee_id).unwrap();
+        }
+    }*/
+
     graph_dot.push_str("}\n");
     print_graph(graph_dot);
 }
