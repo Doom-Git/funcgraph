@@ -11,17 +11,31 @@ struct Args {
     lang: String,
 
     /// Directory
-    #[arg(short = 'd', long = "dir")]
+    #[arg(short = 'd', long = "dir", default_value = ".")]
     dir: PathBuf,
+
+    /// Graph engine
+    #[arg(
+        short = 'e',
+        long = "engine",
+        default_value = "neato",
+        help = "Which eninge should be used for the graph generation:\n- neato f<300(small)\n- fdp f<2000 (medium)\n- sfdp f>2000 (large)\n- twopi (centered approach, radial generation)\n"
+    )]
+    engine: String,
 }
 
-pub fn parse_input() -> (String, PathBuf) {
-    let arg = Args::parse();
+pub fn parse_input() -> (String, PathBuf, String) {
+    let mut arg = Args::parse();
 
     // Check for supported languages is in the match statement of main
     if !arg.dir.exists() {
         eprintln!("The directory does not exist!");
         std::process::exit(1);
     }
-    (arg.lang, arg.dir)
+
+    match arg.engine.as_str() {
+        "neato" | "sfdp" | "twopi" | "fdp" => (),
+        _ => arg.engine = String::from("neato"),
+    };
+    (arg.lang, arg.dir, arg.engine)
 }

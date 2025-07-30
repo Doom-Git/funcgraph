@@ -2,7 +2,6 @@ mod graph;
 mod input;
 mod parser;
 
-use graph::gen_graph;
 use parser::builder::create_tree;
 
 use crate::parser::specs::java::JavaSpec;
@@ -14,7 +13,7 @@ use tree_sitter_python::LANGUAGE as PYTHON;
 use tree_sitter_rust::LANGUAGE as RUST;
 
 fn main() {
-    let (lang, dir) = input::parse_input();
+    let (lang, dir, engine) = input::parse_input();
 
     let graph = match lang.as_str() {
         "rust" => create_tree::<RustSpec>(dir, RUST.into()),
@@ -26,5 +25,5 @@ fn main() {
         }
     };
 
-    gen_graph(graph);
+    graph::print_graph(graph::gen_graph(graph), engine);
 }

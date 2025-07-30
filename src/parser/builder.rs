@@ -21,7 +21,11 @@ pub fn create_tree<T: LanguageSpec>(
         .into_iter()
         .filter_entry(|e| is_src_file::<T>(e))
         .filter_map(|v| v.ok())
-        .for_each(|x| println!("{}", x.path().display()));
+        .for_each(|x| {
+            if x.path().is_file() {
+                println!("{}", x.path().display())
+            }
+        });
 
     let content = std::fs::read_to_string(&file_path).expect("File read failed");
 
